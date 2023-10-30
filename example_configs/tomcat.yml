@@ -1,5 +1,7 @@
 # https://grafana.com/grafana/dashboards/8704-tomcat-dashboard/
----   
+---
+hostPort: tomcat-v8-5.tomcat:9999
+ssl: false
 lowercaseOutputLabelNames: true
 lowercaseOutputName: true
 whitelistObjectNames: ["java.lang:type=OperatingSystem", "Catalina:*"]
