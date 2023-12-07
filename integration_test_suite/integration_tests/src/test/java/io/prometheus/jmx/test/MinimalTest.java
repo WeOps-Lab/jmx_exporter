@@ -71,7 +71,7 @@ public class MinimalTest extends BaseTest implements ContentConsumer {
 
         assertThatMetricIn(metrics)
                 .withName("jmx_exporter_build_info")
-                .withLabel("name", buildInfoName)
+                .withLabel("build_name", buildInfoName)
                 .exists();
 
         assertThatMetricIn(metrics)

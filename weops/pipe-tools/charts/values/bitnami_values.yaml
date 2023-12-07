@@ -23,3 +23,5 @@ containerExtraPorts:
  - name: jmx
    containerPort: 9999
 
+podAnnotations:
+  sidecar.opentelemetry.io/inject: "true"

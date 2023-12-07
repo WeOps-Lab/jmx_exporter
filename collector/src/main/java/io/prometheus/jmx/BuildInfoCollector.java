@@ -53,7 +53,7 @@ public class BuildInfoCollector extends Collector {
                         "jmx_exporter_build_info",
                         "A metric with a constant '1' value labeled with the version of the JMX"
                                 + " exporter.",
-                        asList("version", "name"));
+                        asList("version", "build_name"));
 
         Package pkg = this.getClass().getPackage();
         String version = pkg.getImplementationVersion();

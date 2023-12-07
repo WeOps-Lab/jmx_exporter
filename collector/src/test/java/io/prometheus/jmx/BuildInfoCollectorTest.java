@@ -24,7 +24,7 @@ public class BuildInfoCollectorTest {
                 1L,
                 registry.getSampleValue(
                         "jmx_exporter_build_info",
-                        new String[] {"version", "name"},
+                        new String[] {"version", "build_name"},
                         new String[] {
                             version != null ? version : "unknown", name != null ? name : "unknown"
                         }),

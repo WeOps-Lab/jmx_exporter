@@ -61,7 +61,7 @@ spec:
       containers:
       - name: {{OBJECT}}-exporter-{{VERSION}}
         image: bitnami/jmx-exporter:0.20.0
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         securityContext:
           allowPrivilegeEscalation: false
           runAsUser: 0
