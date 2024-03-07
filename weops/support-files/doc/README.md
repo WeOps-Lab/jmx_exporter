@@ -30,8 +30,9 @@ tomcat版本: 6.x, 7.x, 8.x, 9.x, 10.x
 | password | jmx认证密码，若未配置则留空                                                                 | 否        |                                                     |
 | jmx_url  | jmx 连接字符串，格式为service:jmx:rmi:///jndi/rmi://${target_host}:${target_port}/jmxrmi | 是        | service:jmx:rmi:///jndi/rmi://127.0.0.1:1234/jmxrmi |
 
-### 使用指引
-1. 配置tomcat jmx参数
+### 使用指引  
+#### 配置tomcat jmx参数
+##### Linux环境  
    - 打开tomcat的bin目录下的catalina.sh文件
    - 在文件中找到CATALINA_OPTS变量，添加如下参数
       ```
@@ -67,6 +68,31 @@ tomcat版本: 6.x, 7.x, 8.x, 9.x, 10.x
    - 重启tomcat
    - 验证jmx端口是否生效: `netstat -antlp |grep 1234`
 
+##### Windows环境
+修改Tomcat目录下 `bin\catalina.bat` 文件内容, 先搜索 `CATALINA_OPTS` 
+
+方式一: 
+在 `CATALINA_OPTS` 上方添加    
+```shell
+#添加的参数内容。192.168.1.1改为对应主机ip，若1234端口已使用，可改为其他未在使用的端口
+set CATALINA_OPTS=$CATALINA_OPTS -Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=192.168.1.1 -Dcom.sun.management.jmxremote.port=1234 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+
+#   CATALINA_OPTS   (Optional) Java runtime options used when the "start",
+#                   "run" or "debug" command is executed.
+#..........
+```
+
+方式二: 
+搜索 `CATALINA_OPTS` 并在附近找到下方内容  
+`rem ----- Execute The Requested Command ---------------------------------------`
+
+在这一行下面添加
+```shell
+set CATALINA_OPTS=$CATALINA_OPTS -Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=192.168.1.1 -Dcom.sun.management.jmxremote.port=1234 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+```
+
+#### 网络策略问题
+jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的情况下, 需要注意在参数中添加 `Dcom.sun.management.jmxremote.rmi.port=1234`, 指定rmi打开的端口, 该端口可以和 `Dcom.sun.management.jmxremote.port` 填写的值一样  
 
 ### 指标简介
 | **指标ID**                              | **指标中文名**          | **维度ID**        | **维度含义**      | **单位** |
@@ -103,6 +129,11 @@ tomcat版本: 6.x, 7.x, 8.x, 9.x, 10.x
 #### weops_tomcat_jmx v2.1.0
 
 - weops调整
+
+#### weops_tomcat_jmx v2.2.0
+
+- 增加windows tomcat配置内容
+- 增加rmi端口说明
 
 添加“小嘉”微信即可获取elasticsearch监控指标最佳实践礼包，其他更多问题欢迎咨询
 
