@@ -86,10 +86,12 @@ set CATALINA_OPTS=$CATALINA_OPTS -Dcom.sun.management.jmxremote -Djava.rmi.serve
 搜索 `CATALINA_OPTS` 并在附近找到下方内容  
 `rem ----- Execute The Requested Command ---------------------------------------`
 
-在这一行下面添加
+在这一行下面添加  
 ```shell
 set CATALINA_OPTS=$CATALINA_OPTS -Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=192.168.1.1 -Dcom.sun.management.jmxremote.port=1234 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
 ```
+
+如果尝试两种方式都发现启动tomcat异常, 请检查是否将变量放入不合适的位置, 比如注释区域或者其他变量和启动命令。   
 
 #### 网络策略问题
 jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的情况下, 需要注意在参数中添加 `Dcom.sun.management.jmxremote.rmi.port=1234`, 指定rmi打开的端口, 该端口可以和 `Dcom.sun.management.jmxremote.port` 填写的值一样  
