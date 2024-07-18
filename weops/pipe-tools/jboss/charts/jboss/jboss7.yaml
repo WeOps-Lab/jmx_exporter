@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jboss-v7
+  namespace: jboss
+  labels:
+    app: jboss-v7
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      name: server
+      targetPort: 8080
+      nodePort: 38080
+    - port: 9990
+      name: manage
+      targetPort: 9990
+      nodePort: 39990
+  selector:
+    app: jboss
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jboss-v7
+  namespace: jboss
+spec:
+  serviceName: jboss-v7
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jboss-v7
+    spec:
+      containers:
+        - name: jboss
+          image: quay.io/wildfly/wildfly:32.0.1.Final-jdk21
+          imagePullPolicy: IfNotPresent
+          args: 
+            - /opt/jboss/wildfly/bin/standalone.sh
+            - -b
+            - 0.0.0.0
+            - -bmanagement
+            - 0.0.0.0
+  selector:
+    matchLabels:
+      app: jboss-v7
