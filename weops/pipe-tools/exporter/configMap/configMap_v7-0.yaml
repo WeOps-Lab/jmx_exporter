@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jboss-jmx-config-v7-0
+  namespace: jboss
+data:
+  jboss_jmx_config_v7-0.yml: |-
+    username: weops
+    password: Weops123!
+    jmxUrl: service:jmx:remote+http://jboss.jboss:9990
+    ssl: false
+    lowercaseOutputName: true
+    lowercaseOutputLabelNames: true
+    whitelistObjectNames:
+     - "jboss.as:subsystem=messaging-activemq,server=*,jms-queue=*"
+     - "jboss.as:subsystem=messaging-activemq,server=*,jms-topic=*"
+     - "jboss.as:subsystem=datasources,data-source=*,statistics=*"
+     - "jboss.as:subsystem=datasources,xa-data-source=*,statistics=*"
+     - "jboss.as:subsystem=transactions*"
+     - "jboss.as:subsystem=undertow,server=*,http-listener=*"
+     - "jboss.as:subsystem=undertow,server=*,https-listener=*"
+     # - "java.lang:*"
+    rules:
+      - pattern: "^jboss.as<subsystem=messaging-activemq, server=.+, jms-(queue|topic)=(.+)><>(.+):"
+        attrNameSnakeCase: true
+        name: wildfly_messaging_$3
+        labels:
+          $1: $2
+
+      - pattern: "^jboss.as<subsystem=datasources, (?:xa-)*data-source=(.+), statistics=(.+)><>(.+):"
+        attrNameSnakeCase: true
+        name: wildfly_datasource_$2_$3
+        labels:
+          source_name: $1
+
+      - pattern: "^jboss.as<subsystem=transactions><>number_of_(.+):"
+        attrNameSnakeCase: true
+        name: wildfly_transaction_$1
+
+      - pattern: "^jboss.as<subsystem=undertow, server=(.+), (http[s]?-listener)=(.+)><>(bytes_.+|error_count|processing_time|request_count):"
+        attrNameSnakeCase: true
+        name: wildfly_undertow_$4
+        labels:
+          server_name: $1
+          listener: $3

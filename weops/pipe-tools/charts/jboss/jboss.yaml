@@ -1,0 +1,49 @@
+# /opt/jboss/wildfly/bin/add-user.sh -u weops -p Weops123!
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jboss
+  namespace: jboss
+  labels:
+    app: jboss
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      name: server
+      targetPort: 8080
+      nodePort: 38081
+    - port: 9990
+      name: manage
+      targetPort: 9990
+      nodePort: 39991
+  selector:
+    app: jboss
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jboss
+  namespace: jboss
+spec:
+  serviceName: jboss
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jboss
+    spec:
+      containers:
+        - name: jboss
+          image: quay.io/wildfly/wildfly:27.0.1.Final-jdk19
+          imagePullPolicy: IfNotPresent
+          args: 
+            - /opt/jboss/wildfly/bin/standalone.sh
+            - -b
+            - 0.0.0.0
+            - -bmanagement
+            - 0.0.0.0
+  selector:
+    matchLabels:
+      app: jboss
