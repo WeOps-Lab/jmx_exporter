@@ -63,7 +63,7 @@ bin/activemq stop
 bin/activemq start
 ```
 
-
+若有其他需求可以参考官方文档: https://activemq.apache.org/components/classic/documentation/jmx 
 
 ### 指标简介
 | **指标ID**                                         | **指标中文名**   | **维度ID**    | **维度含义** | **单位**  |
