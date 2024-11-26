@@ -137,6 +137,9 @@ jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的�
 - 增加windows tomcat配置内容
 - 增加rmi端口说明
 
+#### weops_tomcat_jmx v2.3.0
+- 解决tomcat6指标被过滤问题  
+
 添加“小嘉”微信即可获取elasticsearch监控指标最佳实践礼包，其他更多问题欢迎咨询
 
 <img src="https://wedoc.canway.net/imgs/img/小嘉.jpg" width="50%" height="50%">

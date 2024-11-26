@@ -1,4 +1,4 @@
-hostPort: 127.0.0.1:9999
+jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:9999/jmxrmi
 ssl: false
 lowercaseOutputLabelNames: true
 lowercaseOutputName: true
@@ -33,6 +33,31 @@ rules:
     help: Tomcat threadpool $3
     type: GAUGE
   - pattern: 'Catalina<type=Manager, host=([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|]), context=([-a-zA-Z0-9+/$%~_-|!.]*)><>(processingTime|sessionCounter|rejectedSessions|expiredSessions):'
+    name: tomcat_session_$3_total
+    labels:
+      context: "$2"
+      host: "$1"
+    help: Tomcat session $3 total
+    type: COUNTER
+
+  # tomcat6适配
+  - pattern: 'Catalina<type=GlobalRequestProcessor, name=(\w+)-(\d+)><>(\w+):'
+    name: tomcat_$3_total
+    labels:
+      port: "$2"
+      protocol: "$1"
+    help: Tomcat global $3
+    type: COUNTER
+
+  - pattern: 'Catalina<type=ThreadPool, name=(\w+)-(\d+)><>(running|currentThreadCount|currentThreadsBusy|maxThreads):'
+    name: tomcat_threadpool_$3
+    labels:
+      port: "$2"
+      protocol: "$1"
+    help: Tomcat threadpool $3
+    type: GAUGE
+
+  - pattern: 'Catalina<type=Manager, path=/([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|]), host=([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|])><>(processingTime|sessionCounter|rejectedSessions|expiredSessions):'
     name: tomcat_session_$3_total
     labels:
       context: "$2"
