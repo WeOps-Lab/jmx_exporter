@@ -1,0 +1,85 @@
+jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:1099/jmxrmi
+ssl: false
+startDelaySeconds: 0
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+
+rules:
+# OperatingSystem
+- pattern: 'java.lang<type=OperatingSystem><>(OpenFileDescriptorCount|MaxFileDescriptorCount|TotalSwapSpaceSize|FreeSwapSpaceSize|FreePhysicalMemorySize|TotalPhysicalMemorySize|CommittedVirtualMemorySize|ProcessCpuLoad|AvailableProcessors|SystemLoadAverage|SystemCpuLoad)'
+  name: BES_JMX_$1
+  help: BES JMX $1
+  type: GAUGE
+
+# Memory 系统监控
+- pattern: java.lang<type=Memory><>(ObjectPendingFinalizationCount)
+  name: BES_JMX_$1
+  help: BES JMX $1
+  type: GAUGE
+
+# GarbageCollector JVM监控
+- pattern: java.lang<type=GarbageCollector, name=(.*)><>(CollectionCount|CollectionTime)
+  name: BES_JMX_$2
+  labels:
+    GCName: "$1"
+  help: BES JMX $2
+  type: GAUGE
+
+# BES appserv 线程池监控
+- pattern: com.bes.appserv<type=Executor, name=(.*), threadpool=(.*)><>(maxThreads|minSpareThreads|poolSize|activeCount|idleCount|queueSize|completedTaskCount)
+  name: BES_JMX_$3
+  labels:
+    executorName: "$1"
+    threadpool: "$2"
+  help: BES JMX $3
+  type: GAUGE
+
+  # BES appserv 线程池监控
+- pattern: com.bes.appserv<type=Executor, name=(.*)><>(maxThreads|minSpareThreads|poolSize|activeCount|idleCount|queueSize|completedTaskCount)
+  name: BES_JMX_$2
+  labels:
+    executorName: "$1"
+  help: BES JMX $2
+  type: GAUGE
+
+# BES enterprise management JDBC资源监控
+- pattern: com.bes.enterprise.management<ObjectType=datasources, DataSource=(.*)><>(createdCount|numActive|borrowedCount|returnCount|numIdle|numWaiters|connectionLeakCount|destroyedCount|destroyedByBorrowValidationCount|destroyedByEvictorCount|meanBorrowWaitTimeMillis|meanActiveTimeMillis|meanIdleTimeMillis|maxIdle|minIdle|initialSize|maxWait|timeBetweenEvictionRunsMillis|returnedCount)
+  name: BES_JMX_$2
+  labels:
+    datasource: "$1"
+  help: BES JMX $2
+  type: GAUGE
+
+# BES appserv manager 应用会话监控
+- pattern: com.bes.appserv<type=Manager, host=(.*), context=(.*)><>(activeSessions|sessionCounter|expiredSessions)
+  name: BES_JMX_$3
+  labels:
+    host: "$1"
+    context: "$2"
+  help: BES JMX $3
+  type: GAUGE
+
+# BES GlobalRequestProcessor  http监听器监控
+- pattern: com.bes.appserv<type=GlobalRequestProcessor, name=(.*)><>(bytesSent|bytesReceived|processingTime|errorCount|maxTime|requestCount)
+  name: BES_JMX_$2
+  labels:
+    name: "$1"
+  help: BES JMX $2
+  type: GAUGE
+
+# BES ProtocolHandler  http监听器监控
+- pattern: com.bes.appserv<type=ProtocolHandler, name=(.*)><>(connectionCount)
+  name: BES_JMX_$2
+  labels:
+    name: "$1"
+  help: BES JMX $2
+  type: GAUGE
+
+
+# Heaven jca连接池监控
+- pattern: Heaven<type=JcaExecutor, name=(.*)><>(maxThreads|minSpareThreads|poolSize|activeCount|idleCount|queueSize|completedTaskCount)
+  name: BES_JMX_jca_$2
+  labels:
+    jcaname: "$1"
+  help: BES JMX jca $2
+  type: GAUGE
