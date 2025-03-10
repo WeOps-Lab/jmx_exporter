@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jetty9
+  namespace: jetty
+  labels:
+    app: jetty9
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+    - port: 8443
+      targetPort: 8443
+      name: https
+    - port: 1096
+      targetPort: 1096
+      nodePort: 1096
+      name: jmx
+  selector:
+    app: jetty9
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jetty9
+  namespace: jetty
+  labels:
+    app: jetty9
+spec:
+  serviceName: jetty9
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jetty9
+  template:
+    metadata:
+      labels:
+        app: jetty9
+    spec:
+      containers:
+        - name: jetty9
+          image: jetty:9.4.56
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+            - containerPort: 1096
+          env:
+            - name: JAVA_OPTIONS
+              value: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=1096 -Dcom.sun.management.jmxremote.rmi.port=1096 -Djava.rmi.server.hostname=10.10.90.114 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
+          args:
+            - "--module=jmx"
