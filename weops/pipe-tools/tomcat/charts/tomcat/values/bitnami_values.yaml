@@ -1,5 +1,5 @@
 commonLabels:
-  object: elasticsearch
+  object: tomcat
 
 tomcatUsername: weops
 tomcatPassword: Weops@123
