@@ -97,34 +97,45 @@ set CATALINA_OPTS=$CATALINA_OPTS -Dcom.sun.management.jmxremote -Djava.rmi.serve
 jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的情况下, 需要注意在参数中添加 `Dcom.sun.management.jmxremote.rmi.port=1234`, 指定rmi打开的端口, 该端口可以和 `Dcom.sun.management.jmxremote.port` 填写的值一样  
 
 ### 指标简介
-| **指标ID**                              | **指标中文名**          | **维度ID**        | **维度含义**      | **单位** |
-|---------------------------------------|--------------------|-----------------|---------------|--------|
-| tomcat_serverinfo                     | Tomcat服务器信息        | serverinfo      | 服务器信息         | -      |
-| tomcat_bytesreceived_total            | Tomcat全局接收总流量      | port, protocol  | 端口号, 协议类型     | bytes  |
-| tomcat_bytessent_total                | Tomcat全局发送总流量      | port, protocol  | 端口号, 协议类型     | bytes  |
-| tomcat_errorcount_total               | Tomcat全局错误总数       | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_processingtime_total           | Tomcat全局处理总时长      | port, protocol  | 端口号, 协议类型     | ms     |
-| tomcat_maxtime_total                  | Tomcat全局最大处理时长     | port, protocol  | 端口号, 协议类型     | ms     |
-| tomcat_requestcount_total             | Tomcat全局请求总数       | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_maxthreads          | Tomcat线程池最大线程数     | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_pollerthreadcount   | Tomcat线程池轮询线程数     | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_connectioncount     | Tomcat线程池连接数       | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_acceptorthreadcount | Tomcat线程池接收器线程数    | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_keepalivecount      | Tomcat线程池保持活跃线程数   | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_minsparethreads     | Tomcat线程池最小空闲线程数   | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_currentthreadcount  | Tomcat线程池当前线程数     | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_currentthreadsbusy  | Tomcat线程池繁忙线程数     | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_threadpool_acceptcount         | Tomcat线程池接受计数      | port, protocol  | 端口号, 协议类型     | -      |
-| tomcat_session_sessioncounter_total   | Tomcat会话计数器总数      | context, host   | 上下文路径, 主机     | -      |
-| tomcat_session_rejectedsessions_total | Tomcat会话拒绝会话总数     | context, host   | 上下文路径, 主机     | -      |
-| tomcat_session_expiredsessions_total  | Tomcat会话过期会话总数     | context, host   | 上下文路径, 主机     | -      |
-| tomcat_session_processingtime_total   | Tomcat会话处理总时长      | context, host   | 上下文路径, 主机     | ms     |
-| tomcat_servlet_errorcount_total       | Tomcat servlet错误总数 | module, servlet | 模块, servlet名称 | -      |
-| tomcat_servlet_requestcount_total     | Tomcat servlet请求总数 | module, servlet | 模块, servlet名称 | -      |
-| tomcat_servlet_processingtime_total   | Tomcat servlet处理总数 | module, servlet | 模块, servlet名称 | ms     |
-| jmx_scrape_duration_seconds           | JMX抓取消耗时间          | -               | -             | s      |
-| jmx_scrape_error                      | 抓取失败的指标            | -               | -             | -      |
-
+| **指标ID**                                 | **指标中文名**              | **维度ID**            | **维度含义**      | **单位** |
+|------------------------------------------|------------------------|---------------------|---------------|--------|
+| tomcat_serverinfo                        | Tomcat服务器信息            | serverinfo          | 服务器信息         | -      |
+| tomcat_bytesreceived_total               | Tomcat全局接收总流量          | port, protocol_type | 端口号, 协议类型     | bytes  |
+| tomcat_bytesreceived_increase            | Tomcat全局接收流量增长数        | port, protocol_type | 端口号, 协议类型     | bytes  |
+| tomcat_bytessent_total                   | Tomcat全局发送总流量          | port, protocol_type | 端口号, 协议类型     | bytes  |
+| tomcat_bytessent_increase                | Tomcat全局发送流量增长数        | port, protocol_type | 端口号, 协议类型     | bytes  |
+| tomcat_errorcount_total                  | Tomcat全局错误总数           | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_errorcount_increase               | Tomcat全局错误增长数          | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_processingtime_total              | Tomcat全局处理总时长          | port, protocol_type | 端口号, 协议类型     | ms     |
+| tomcat_maxtime_total                     | Tomcat全局最大处理时长         | port, protocol_type | 端口号, 协议类型     | ms     |
+| tomcat_requestcount_total                | Tomcat全局请求总数           | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_requestcount_increase             | Tomcat全局请求增长数          | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_maxthreads             | Tomcat线程池最大线程数         | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_pollerthreadcount      | Tomcat线程池轮询线程数         | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_connectioncount        | Tomcat线程池连接数           | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_acceptorthreadcount    | Tomcat线程池接收器线程数        | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_keepalivecount         | Tomcat线程池保持活跃线程数       | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_minsparethreads        | Tomcat线程池最小空闲线程数       | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_currentthreadcount     | Tomcat线程池当前线程数         | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_currentthreadsbusy     | Tomcat线程池繁忙线程数         | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_threadpool_acceptcount            | Tomcat线程池接受计数          | port, protocol_type | 端口号, 协议类型     | -      |
+| tomcat_session_sessioncounter_total      | Tomcat会话计数器总数          | context, host       | 上下文路径, 主机     | -      |
+| tomcat_session_sessioncounter_increase   | Tomcat会话计数器增长数         | context, host       | 上下文路径, 主机     | -      |
+| tomcat_session_rejectedsessions_total    | Tomcat会话拒绝会话总数         | context, host       | 上下文路径, 主机     | -      |
+| tomcat_session_rejectedsessions_increase | Tomcat会话拒绝会话增长数        | context, host       | 上下文路径, 主机     | -      |
+| tomcat_session_expiredsessions_total     | Tomcat会话过期会话总数         | context, host       | 上下文路径, 主机     | -      |
+| tomcat_session_expiredsessions_increase  | Tomcat会话过期会话增长数        | context, host       | 上下文路径, 主机     | -      |
+| tomcat_session_processingtime_total      | Tomcat会话处理总时长          | context, host       | 上下文路径, 主机     | ms     |
+| tomcat_session_processingtime_increase   | Tomcat会话处理时长           | context, host       | 上下文路径, 主机     | ms     |
+| tomcat_servlet_errorcount_total          | Tomcat servlet错误总数     | module, servlet     | 模块, servlet名称 | -      |
+| tomcat_servlet_errorcount_increase       | Tomcat servlet错误增长数    | module, servlet     | 模块, servlet名称 | -      |
+| tomcat_servlet_requestcount_total        | Tomcat servlet请求总数     | module, servlet     | 模块, servlet名称 | -      |
+| tomcat_servlet_requestcount_increase     | Tomcat servlet请求增长数    | module, servlet     | 模块, servlet名称 | -      |
+| tomcat_servlet_processingtime_total      | Tomcat servlet处理总时长    | module, servlet     | 模块, servlet名称 | ms     |
+| tomcat_servlet_processingtime_increase   | Tomcat servlet处理时长     | module, servlet     | 模块, servlet名称 | ms     |
+| tomcat_servlet_requestprocess_avgtime    | Tomcat servlet平均请求处理时长 | module, servlet     | 模块, servlet名称 | ms     |
+| jmx_scrape_duration_seconds              | JMX抓取消耗时间              | -                   | -             | s      |
+| jmx_scrape_error                         | 抓取失败的指标                | -                   | -             | -      |
 
 ### 版本日志
 
@@ -139,6 +150,10 @@ jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的�
 
 #### weops_tomcat_jmx v2.3.0
 - 解决tomcat6指标被过滤问题  
+
+#### weops_tomcat_jmx v2.3.1
+- 内置衍生指标 
+- protocol维度变更为protocol_type
 
 添加“小嘉”微信即可获取elasticsearch监控指标最佳实践礼包，其他更多问题欢迎咨询
 
