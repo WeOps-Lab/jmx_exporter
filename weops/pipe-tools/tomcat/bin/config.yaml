@@ -1,4 +1,4 @@
-jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:9999/jmxrmi
+jmxUrl: service:jmx:rmi:///jndi/rmi://10.10.90.113:9000/jmxrmi
 ssl: false
 lowercaseOutputLabelNames: true
 lowercaseOutputName: true
@@ -15,7 +15,7 @@ rules:
     name: tomcat_$3_total
     labels:
       port: "$2"
-      protocol: "$1"
+      protocol_type: "$1"
     help: Tomcat global $3
     type: COUNTER
   - pattern: 'Catalina<j2eeType=Servlet, WebModule=//([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|]), name=([-a-zA-Z0-9+/$%~_-|!.]*), J2EEApplication=none, J2EEServer=none><>(requestCount|processingTime|errorCount):'
@@ -29,7 +29,7 @@ rules:
     name: tomcat_threadpool_$3
     labels:
       port: "$2"
-      protocol: "$1"
+      protocol_type: "$1"
     help: Tomcat threadpool $3
     type: GAUGE
   - pattern: 'Catalina<type=Manager, host=([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|]), context=([-a-zA-Z0-9+/$%~_-|!.]*)><>(processingTime|sessionCounter|rejectedSessions|expiredSessions):'
@@ -45,7 +45,7 @@ rules:
     name: tomcat_$3_total
     labels:
       port: "$2"
-      protocol: "$1"
+      protocol_type: "$1"
     help: Tomcat global $3
     type: COUNTER
 
@@ -53,7 +53,7 @@ rules:
     name: tomcat_threadpool_$3
     labels:
       port: "$2"
-      protocol: "$1"
+      protocol_type: "$1"
     help: Tomcat threadpool $3
     type: GAUGE
 

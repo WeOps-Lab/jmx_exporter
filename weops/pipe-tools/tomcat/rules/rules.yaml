@@ -1,0 +1,53 @@
+groups:
+- name: tomcat_metrics
+  rules:
+  # Tomcat 全局接收流量增长数 (bytes)
+  - record: tomcat_bytesreceived_increase
+    expr: label_replace(increase(tomcat_bytesreceived_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat 全局发送流量增长数 (bytes)
+  - record: tomcat_bytessent_increase
+    expr: label_replace(increase(tomcat_bytessent_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat 全局错误增长数
+  - record: tomcat_errorcount_increase
+    expr: label_replace(increase(tomcat_errorcount_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat 全局请求增长数
+  - record: tomcat_requestcount_increase
+    expr: label_replace(increase(tomcat_requestcount_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat 会话计数器增长数
+  - record: tomcat_session_sessioncounter_increase
+    expr: label_replace(increase(tomcat_session_sessioncounter_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat 会话拒绝会话增长数
+  - record: tomcat_session_rejectedsessions_increase
+    expr: label_replace(increase(tomcat_session_rejectedsessions_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat 会话过期会话增长数
+  - record: tomcat_session_expiredsessions_increase
+    expr: label_replace(increase(tomcat_session_expiredsessions_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat 会话处理时长 (ms)
+  - record: tomcat_session_processingtime_increase
+    expr: label_replace(increase(tomcat_session_processingtime_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat servlet 错误增长数
+  - record: tomcat_servlet_errorcount_increase
+    expr: label_replace(increase(tomcat_servlet_errorcount_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat servlet 请求增长数
+  - record: tomcat_servlet_requestcount_increase
+    expr: label_replace(increase(tomcat_servlet_requestcount_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat servlet 处理时长 (ms)
+  - record: tomcat_servlet_processingtime_increase
+    expr: label_replace(increase(tomcat_servlet_processingtime_total[5m]), "protocol", "vector", "", "")
+
+  # Tomcat servlet 平均请求处理时长 (ms)
+  - record: tomcat_servlet_requestprocess_avgtime
+    expr: label_replace(
+      increase(tomcat_servlet_processingtime_total[5m]) / increase(tomcat_servlet_requestcount_total[5m]),
+      "protocol", "vector", "", ""
+      )
