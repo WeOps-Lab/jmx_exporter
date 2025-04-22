@@ -70,7 +70,7 @@ Tongweb6默认JMX已开启，端口为7200。
 | tongweb6_monitor_http_connector_currentthreadshang   | HTTP连接当前挂起线程数 | name_info               | 名称       | -      |
 | tongweb6_monitor_http_connector_currentthreadcount   | HTTP连接当前线程总数  | name_info               | 名称       | -      |
 | tongweb6_monitor_http_connector_averagetime          | HTTP连接平均处理时间  | name_info               | 名称       | ms     |
-| tongweb6_tongweb6_global_request_processor_bytessent | 全局请求发送字节数     | name_info               | 名称       | bytes  |
+| tongweb6_global_request_processor_bytessent          | 全局请求发送字节数     | name_info               | 名称       | bytes  |
 | tongweb6_global_request_processor_maxtime            | 全局请求最大处理时间    | name_info               | 名称       | ms     |
 | tongweb6_global_request_processor_processingtime     | 全局请求总处理时间     | name_info               | 名称       | ms     |
 | tongweb6_global_request_processor_bytesreceived      | 全局请求接收字节数     | name_info               | 名称       | bytes  |
@@ -96,6 +96,9 @@ Tongweb6默认JMX已开启，端口为7200。
 
 - weops调整
 
+#### weops_tongweb6_jmx v1.5.1
+- 更正指标ID
+    tongweb6_global_request_processor_bytessent  全局请求发送字节数
 
 添加“小嘉”微信即可获取tongweb6监控指标最佳实践礼包，其他更多问题欢迎咨询
 
