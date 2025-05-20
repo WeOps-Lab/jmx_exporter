@@ -71,6 +71,9 @@ containers:
     args: {{- include "common.tplvalues.render" (dict "value" .Values.args "context" $) | nindent 6 }}
     {{- end }}
     env:
+      {{- if .Values.extraEnvVars }}
+      {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 6 }}
+      {{- end }}
       - name: BITNAMI_DEBUG
         value: {{ ternary "true" "false" .Values.image.debug | quote }}
       - name: TOMCAT_USERNAME
@@ -85,9 +88,6 @@ containers:
       {{- if or .Values.catalinaOpts .Values.metrics.jmx.enabled }}
       - name: CATALINA_OPTS
         value: {{ include "tomcat.catalinaOpts" . | quote }}
-      {{- end }}
-      {{- if .Values.extraEnvVars }}
-      {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 6 }}
       {{- end }}
     {{- if or .Values.extraEnvVarsCM .Values.extraEnvVarsSecret }}
     envFrom:
