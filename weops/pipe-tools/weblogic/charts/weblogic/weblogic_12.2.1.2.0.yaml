@@ -1,0 +1,57 @@
+# 账户: weblogic
+# 密码: welcome1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weblogic-12-2-1-2
+  namespace: weblogic
+  labels:
+    app: weblogic-12-2-1-2
+spec:
+  type: NodePort
+  ports:
+    - port: 7001
+      name: server
+      targetPort: 7001
+      nodePort: 7001
+    - port: 1098
+      targetPort: 1098
+      nodePort: 1098
+      name: jmx
+  selector:
+    app: weblogic-12-2-1-2
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: weblogic-12-2-1-2
+  namespace: weblogic
+spec:
+  serviceName: weblogic-12-2-1-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: weblogic-12-2-1-2
+    spec:
+      containers:
+        - name: weblogic-12-2-1-2
+          image: registry-svc:25000/library/weblogic-1221-domain:v12.2.1.2.0
+          imagePullPolicy: IfNotPresent
+          args: ["startWebLogic.sh"]
+          ports:
+            - containerPort: 7001
+            - containerPort: 1098
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: JAVA_OPTIONS
+              value: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=1098 -Dcom.sun.management.jmxremote.rmi.port=1098 -Djava.rmi.server.hostname=10.10.90.114 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djavax.management.builder.initial=weblogic.management.jmx.mbeanserver.WLSMBeanServerBuilder -Djava.rmi.server.hostname=$(POD_IP)"
+
+  selector:
+    matchLabels:
+      app: weblogic-12-2-1-2
