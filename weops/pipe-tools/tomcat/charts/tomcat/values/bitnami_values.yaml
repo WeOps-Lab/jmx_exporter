@@ -4,14 +4,14 @@ commonLabels:
 tomcatUsername: weops
 tomcatPassword: Weops@123
 
-catalinaOpts: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Djava.rmi.server.hostname=$(POD_IP)
+catalinaOpts: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Djava.rmi.server.hostname=$(NODE_IP)
 
 extraEnvVars:
-  - name: POD_IP
+  - name: NODE_IP
     valueFrom:
       fieldRef:
         apiVersion: v1
-        fieldPath: status.podIP
+        fieldPath: status.hostIP
 
 tomcatAllowRemoteManagement: 1
 
