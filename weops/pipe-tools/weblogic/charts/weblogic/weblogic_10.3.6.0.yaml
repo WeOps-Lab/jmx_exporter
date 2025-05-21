@@ -40,6 +40,8 @@ spec:
       labels:
         app: weblogic-10-3-6-0
     spec:
+      nodeSelector:
+        exporter-type: jmx
       containers:
         - name: weblogic-10-3-6-0
           image: registry-svc:25000/library/vulhub/weblogic:10.3.6.0-2017

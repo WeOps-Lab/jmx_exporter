@@ -4,7 +4,7 @@ commonLabels:
 tomcatUsername: weops
 tomcatPassword: Weops@123
 
-catalinaOpts: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Djava.rmi.server.hostname=$(NODE_IP)
+#catalinaOpts: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Djava.rmi.server.hostname=$(NODE_IP)
 
 extraEnvVars:
   - name: NODE_IP
@@ -26,7 +26,9 @@ service:
     protocol: TCP
     targetPort: 9999
 
-containerExtraPorts:
- - name: jmx
-   containerPort: 9999
+#containerExtraPorts:
+# - name: jmx
+#   containerPort: 9999
 
+nodeSelector:
+  exporter-type: jmx
