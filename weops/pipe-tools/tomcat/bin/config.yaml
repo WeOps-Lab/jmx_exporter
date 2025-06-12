@@ -1,9 +1,10 @@
-jmxUrl: service:jmx:rmi:///jndi/rmi://10.10.90.113:9000/jmxrmi
+username: {{ username }}
+password: {{ password }}
+jmxUrl: {{ jmx_url }}
 ssl: false
-lowercaseOutputLabelNames: true
+startDelaySeconds: 0
 lowercaseOutputName: true
-whitelistObjectNames: ["java.lang:type=OperatingSystem", "Catalina:*"]
-blacklistObjectNames: []
+lowercaseOutputLabelNames: true
 rules:
   - pattern: 'Catalina<type=Server><>serverInfo: (.+)'
     name: tomcat_serverinfo
@@ -11,7 +12,7 @@ rules:
     labels:
       serverInfo: "$1"
     type: COUNTER
-  - pattern: 'Catalina<type=GlobalRequestProcessor, name=\"(\w+-\w+)-(\d+)\"><>(\w+):'
+  - pattern: 'Catalina<type=GlobalRequestProcessor, name=\"([\w-]+)-(\d+)\"><>(\w+):'
     name: tomcat_$3_total
     labels:
       port: "$2"
@@ -25,7 +26,7 @@ rules:
       servlet: "$2"
     help: Tomcat servlet $3 total
     type: COUNTER
-  - pattern: 'Catalina<type=ThreadPool, name="(\w+-\w+)-(\d+)"><>(currentThreadCount|currentThreadsBusy|keepAliveCount|connectionCount|acceptCount|acceptorThreadCount|pollerThreadCount|maxThreads|minSpareThreads):'
+  - pattern: 'Catalina<type=ThreadPool, name="([\w-]+)-(\d+)"><>(currentThreadCount|currentThreadsBusy|keepAliveCount|connectionCount|acceptCount|acceptorThreadCount|pollerThreadCount|maxThreads|minSpareThreads):'
     name: tomcat_threadpool_$3
     labels:
       port: "$2"
