@@ -155,6 +155,9 @@ jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的�
 - 内置衍生指标 
 - protocol维度变更为protocol_type
 
+#### weops_tomcat_jmx v2.3.2
+- 修复采集https时没有维度的问题
+
 添加“小嘉”微信即可获取elasticsearch监控指标最佳实践礼包，其他更多问题欢迎咨询
 
 <img src="https://wedoc.canway.net/imgs/img/小嘉.jpg" width="50%" height="50%">
