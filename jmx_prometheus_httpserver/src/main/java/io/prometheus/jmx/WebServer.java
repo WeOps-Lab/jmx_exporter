@@ -16,7 +16,7 @@
 
 package io.prometheus.jmx;
 
-import io.prometheus.client.CollectorRegistry;
+import io.prometheus.jmx.shaded.io.prometheus.client.CollectorRegistry;
 import io.prometheus.jmx.common.http.ConfigurationException;
 import io.prometheus.jmx.common.http.HTTPServerFactory;
 import java.io.File;
