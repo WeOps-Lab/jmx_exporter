@@ -1,0 +1,58 @@
+username: {{ username }}
+password: {{ password }}
+jmxUrl: {{ jmx_url }}
+ssl: false
+startDelaySeconds: 0
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+
+# 白名单限制采集范围
+whitelistObjectNames:
+  - "amx:*"
+
+rules:
+  # 线程池
+  ### 正在使用线程数
+  ### 核心线程数
+  ### 等待队列大小
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=thread-pool-mon, name=network/http-listener-1/thread-pool><(currentthreadcount|corethreads|totalexecutedtasks)>'
+    name: amx_thread_pool_runtime_$1
+    help: "$1"
+
+  # JDBC连接池-数据库连接
+  ### 正在被使用连接数
+  ### 空闲连接数
+  ### 等待线程数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=jdbc-connection-pool-mon, name=resources/(.+)><(numconnused|numconnfree|waitqueuelength)>'
+    name: amx_jdbc_pool_mon_$2
+    labels:
+      pool_name: $1  # 数据库连接池名称
+    help: "$2"
+
+  # WEB容器
+  ### 请求数
+  ### 响应时间
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=request-mon, name=(http-service/server/request|http-service/__asadmin/request)><(countrequests|processingtime)'
+    name: amx_http_request_$2
+    labels:
+      server_name: $1
+    help: "$2"
+
+  ### 处理数据次数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=jsp-mon, name=web/jsp><totaljspcount>'
+    name: amx_jsp_mon_totaljspcount
+    help: "处理数据次数"
+
+  ### 接收数据量
+  ### 传输数据量
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=request-mon, name=(http-service/server/request|http-service/__asadmin/request)><(countbytesreceived|countbytestransmitted)>'
+    name: amx_request_mon_$2
+    labels:
+      server_name: $1
+    help: "$2(bytes)"
+
+  # JVM监控
+  ### CPU使用率
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=operating-system-mon, name=jvm/operating-system><(cpu-percent)>'
+    name: amx_server_mon_cpu_percent
+    help: "CPU使用率(%)"
