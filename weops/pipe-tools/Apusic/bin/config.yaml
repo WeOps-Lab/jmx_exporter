@@ -1,0 +1,102 @@
+username: {{ username }}
+password: {{ password }}
+jmxUrl: {{ jmx_url }}
+ssl: false
+startDelaySeconds: 0
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+
+# 白名单限制采集范围
+whitelistObjectNames:
+  - "amx:pp=/mon/server-mon[server],type=session-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=transaction-service-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=servlet-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=deployment-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=web-request-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=thread-pool-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=memory-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=jdbc-connection-pool-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=request-mon,*"
+  - "amx:pp=/mon/server-mon[server],type=jsp-mon,*"
+
+rules:
+  # ============= 会话监控 (session-mon) =============
+  # 当前活跃会话数
+  # 持久化会话总数
+  # 拒绝的会话总数
+  # 会话总数
+  # 已过期的会话总数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=session-mon, name=web/session><(activesessionscurrent|persistedsessionstotal|rejectedsessionstotal|sessionstotal|expiredsessionstotal)>'
+    name: amx_sessions_$1
+    help: 会话数_$1
+
+  # ============= 事务监控 (transaction-service) =============
+  # 当前活跃事务数
+  # 已提交事务数
+  # 回滚事务数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=transaction-service-mon, name=transaction-service><(activecount|committedcount|rolledbackcount)>'
+    name: amx_transactions_$1
+    help: 事务监控_$1
+
+  # ============ Servlet监控 (servlet-mon) =============
+  # 已加载的servlet总数
+  # 当前活跃的servlet数
+  # 累计servlet处理时间(ms)
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=servlet-mon, name=web/servlet><(totalservletsloadedcount|activeservletsloadedcount|servletprocessingtimes)>'
+    name: amx_servlet_$1
+    help: Servlet监控_$1
+
+  # ============= 部署监控 (deployment-mon) =============
+  # 当前活跃的应用程序数
+  # 部署的应用程序总数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=deployment-mon, name=deployment/lifecycle><(activeapplicationsdeployedcount|totalapplicationsdeployedcount)>'
+    name: amx_deployment_$1
+    help: 部署_$1
+
+  # ============= 请求监控 (request-mon) =============
+  # 到目前为止已处理的请求的累计数量
+  # 错误计数的累积值，错误计数表示响应代码大于或等于400的事例数
+  # 平均请求处理时间(ms)
+  # 最长响应时间(ms)
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=web-request-mon, name=web/request><(requestcount|errorcount|processingtime|maxtime)>'
+    name: amx_web_$1
+    help: Web服务_$1
+
+  # ============= 线程池监控 (thread-pool-mon) =============
+  # 线程池中的线程核心数
+  # 正在请求处理的线程数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=thread-pool-mon, name=network/admin-listener/thread-pool><(corethreads|currentthreadsbusy)>'
+    name: amx_web_$1
+    help: 线程监控_$1
+
+  # ============= 内存监控 (memory-mon) =============
+  # cpu负载(%)
+  # 空闲物理内存(bytes)
+  # 已用内存量(bytes)
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=memory-mon, name=jvm/memory><(processcpuload-count|freePhysicalMemory-count|usedheapsize-count)>'
+    name: amx_jvm_memory_$1
+    type: GAUGE
+    help: 内存监控_$1
+
+ # JDBC连接池-数据库连接
+  ### 正在被使用连接数
+  ### 空闲连接数
+  ### 等待线程数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=jdbc-connection-pool-mon, name=resources/(.+)><(numconnused|numconnfree|waitqueuelength)>'
+    name: amx_jdbc_pool_mon_$2
+    labels:
+      pool_name: $1  # 数据库连接池名称
+    help: "JDBC连接池_$2"
+
+  ### 处理数据次数
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=jsp-mon, name=web/jsp><totaljspcount>'
+    name: amx_jsp_mon_totaljspcount
+    help: "处理数据次数"
+
+  ### 接收数据量
+  ### 传输数据量
+  - pattern: 'amx<pp=/mon/server-mon\[server\], type=request-mon, name=(.+)><(countbytesreceived|countbytestransmitted)>'
+    name: amx_request_mon_$2
+    labels:
+      server_name: $1
+    help: "数据量_$2(bytes)"
