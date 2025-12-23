@@ -66,7 +66,7 @@ rules:
   # 线程池中的线程核心数
   # 正在请求处理的线程数
   - pattern: 'amx<pp=/mon/server-mon\[server\], type=thread-pool-mon, name=network/admin-listener/thread-pool><(corethreads|currentthreadsbusy)>'
-    name: amx_web_$1
+    name: amx_thread_pool_$1
     help: 线程监控_$1
 
   # ============= 内存监控 (memory-mon) =============
