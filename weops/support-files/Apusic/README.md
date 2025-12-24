@@ -70,6 +70,38 @@ Apusic: v10
 **操作路径：** 【服务器】→【管控服务器】→【一般信息】→ 选择 **重新启动**
 
 ### 指标简介
+| **指标ID**                                       | **指标中文名**     | **维度ID**    | **维度含义** | **单位**  | **指标类型** |
+|------------------------------------------------|---------------|-------------|----------|---------|----------|
+| amx_web_maxtime                                | 最长响应时间        | -           | -        | ms      | gauge    |
+| amx_web_processingtime                         | 平均请求处理时间      | -           | -        | ms      | gauge    |
+| amx_web_errorcount                             | 错误计数的累积值      | -           | -        | -       | counter  |
+| amx_web_requestcount                           | 已处理请求的累计数量    | -           | -        | -       | counter  |
+| amx_jsp_mon_totaljspcount                      | 处理数据次数        | -           | -        | -       | untyped  |
+| amx_transactions_committedcount                | 已提交事务数        | -           | -        | -       | gauge    |
+| amx_transactions_rolledbackcount               | 回滚事务数         | -           | -        | -       | gauge    |
+| amx_transactions_activecount                   | 当前活跃事务数       | -           | -        | -       | gauge    |
+| amx_jdbc_pool_mon_numconnfree                  | 空闲连接数         | pool_name   | 连接名称     | -       | gauge    |
+| amx_jdbc_pool_mon_numconnused                  | 正在被使用连接数      | pool_name   | 连接名称     | -       | gauge    |
+| amx_jdbc_pool_mon_waitqueuelength              | 等待线程数         | pool_name   | 连接名称     | -       | gauge    |
+| amx_thread_pool_currentthreadsbusy             | 正在请求处理的线程数    | -           | -        | -       | gauge    |
+| amx_thread_pool_corethreads                    | 线程池中的线程核心数    | -           | -        | -       | gauge    |
+| amx_sessions_activesessionscurrent             | 当前活跃会话数       | -           | -        | -       | gauge    |
+| amx_sessions_rejectedsessionstotal             | 拒绝的会话总数       | -           | -        | -       | untyped  |
+| amx_sessions_sessionstotal                     | 会话总数          | -           | -        | -       | untyped  |
+| amx_sessions_persistedsessionstotal            | 持久化会话总数       | -           | -        | -       | untyped  |
+| amx_sessions_expiredsessionstotal              | 已过期的会话总数      | -           | -        | -       | untyped  |
+| amx_deployment_activeapplicationsdeployedcount | 当前活跃的应用程序数    | -           | -        | -       | gauge    |
+| amx_deployment_totalapplicationsdeployedcount  | 部署的应用程序总数     | -           | -        | -       | counter  |
+| amx_request_mon_countbytestransmitted          | 传输数据量         | server_name | 虚拟主机     | bytes   | untyped  |
+| amx_request_mon_countbytesreceived             | 接收数据量         | server_name | 虚拟主机     | bytes   | untyped  |
+| amx_servlet_activeservletsloadedcount          | 当前活跃的servlet数 | -           | -        | -       | gauge    |
+| amx_servlet_servletprocessingtimes             | 累计servlet处理时间 | -           | -        | ms      | untyped  |
+| amx_servlet_totalservletsloadedcount           | 已加载的servlet总数 | -           | -        | -       | untyped  |
+| amx_jvm_memory_freephysicalmemory_count        | 空闲物理内存        | -           | -        | bytes   | gauge    |
+| amx_jvm_memory_usedheapsize_count              | 已用内存量         | -           | -        | bytes   | gauge    |
+| amx_jvm_memory_processcpuload_count            | cpu负载         | -           | -        | percent | gauge    |
+| jmx_scrape_duration_seconds                    | JMX抓取消耗时间     | -           | -        | s       | gauge    |
+| jmx_scrape_error                               | 抓取失败的指标       | -           | -        | -       | gauge    |
 
 
 ### 版本日志
