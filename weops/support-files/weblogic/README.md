@@ -50,6 +50,76 @@ Weblogic版本: 10.3.6.0
 jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的情况下, 需要注意在参数中添加 `Dcom.sun.management.jmxremote.rmi.port=9999`, 指定rmi打开的端口, 该端口可以和 `Dcom.sun.management.jmxremote.port` 填写的值一样  
 
 ### 指标简介
+| **指标分类**                 | **指标ID**                                                     | **指标中文名**        | **维度ID**                       | **维度含义**    | **单位** |
+|--------------------------|--------------------------------------------------------------|------------------|--------------------------------|-------------|--------|
+| 服务器(WebServer)           | weblogic_webserver_default_web_server                        | 默认Web服务器         | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_execute_thread_idle_count                | 线程池空闲执行线程计数      | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_standby_thread_count                     | 线程池待命线程计数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_throughput                               | 线程池吞吐量           | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_execute_thread_total_count               | 线程池总执行线程数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_pending_user_request_count               | 线程池待处理用户请求数      | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_execute_thread_total_count               | 线程池总执行线程数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_completed_request_count                  | 线程池完成请求数         | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_min_threads_constraints_pending          | 待满足最小线程约束数       | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_suspended                                | 线程池暂停状态          | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_shared_capacity_for_work_managers        | 工作管理器的共享容量       | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_queue_length                             | 线程池队列长度          | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_min_threads_constraints_completed        | 最小线程约束完成数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 线程池(Threadpool)          | weblogic_threadpool_hogging_thread_count                     | 占用线程数            | bea_name, runtime              | 名称, 运行时     | -      |
+| 应用(Application)          | weblogic_application_workmanager_stuck_thread_count          | 应用工作管理器卡住线程计数    | application, bea_name, runtime | 应用, 名称, 运行时 | -      |
+| 应用(Application)          | weblogic_application_workmanager_completed_requests          | 应用工作管理器完成请求数     | application, bea_name, runtime | 应用, 名称, 运行时 | -      |
+| 应用(Application)          | weblogic_application_workmanager_pending_requests            | 应用工作管理器待处理请求数    | application, bea_name, runtime | 应用, 名称, 运行时 | -      |
+| 应用(Application)          | weblogic_application_ear                                     | 应用是否为EAR文件       | bea_name, runtime              | 名称, 运行时     | -      |
+| 应用(Application)          | weblogic_application_active_version_state                    | 应用活动版本状态         | bea_name, runtime              | 名称, 运行时     | -      |
+| 工作管理器(WorkManager)       | weblogic_workmanager_completed_requests                      | 工作管理器完成请求数       | bea_name, runtime              | 名称, 运行时     | -      |
+| 工作管理器(WorkManager)       | weblogic_workmanager_stuck_thread_count                      | 工作管理器卡住线程计数      | bea_name, runtime              | 名称, 运行时     | -      |
+| 工作管理器(WorkManager)       | weblogic_workmanager_pending_requests                        | 工作管理器待处理请求数      | bea_name, runtime              | 名称, 运行时     | -      |
+| 消息传递服务(JMS)              | weblogic_jms_connections_high_count                          | 最高JMS连接数         | bea_name, runtime              | 名称, 运行时     | -      |
+| 消息传递服务(JMS)              | weblogic_jms_jmsservers_total_count                          | 总JMS服务器计数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 消息传递服务(JMS)              | weblogic_jms_connections_total_count                         | 总JMS连接数          | bea_name, runtime              | 名称, 运行时     | -      |
+| 消息传递服务(JMS)              | weblogic_jms_jmsservers_current_count                        | 当前JMS服务器计数       | bea_name, runtime              | 名称, 运行时     | -      |
+| 消息传递服务(JMS)              | weblogic_jms_connections_current_count                       | 当前JMS连接数         | bea_name, runtime              | 名称, 运行时     | -      |
+| 消息传递服务(JMS)              | weblogic_jms_jmsservers_high_count                           | 最高JMS服务器数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_delete_count                        | 持久化存储删除计数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_create_count                        | 持久化存储创建计数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_allocated_io_buffer_bytes           | 分配的IO缓冲区字节数      | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_allocated_window_buffer_bytes       | 分配的窗口缓冲区字节数      | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_update_count                        | 持久化存储更新计数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_read_count                          | 持久化存储读取计数        | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_physical_write_count                | 持久化存储物理写入计数      | bea_name, runtime              | 名称, 运行时     | -      |
+| 持久化存储(PersistentStore)   | weblogic_persistentstore_object_count                        | 持久化存储对象数         | bea_name, runtime              | 名称, 运行时     | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_active_connections_average_count     | JDBC活动连接平均数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_waiting_for_connection_high_count    | JDBC等待连接峰值数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_connection_delay_time                | JDBC连接延迟时间       | name, runtime                  | 数据源名称, 运行时  | ms     |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_waiting_for_connection_current_count | JDBC当前等待连接数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_highest_num_available                | JDBC历史最大可用连接数    | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_curr_capacity                        | JDBC当前容量         | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_waiting_for_connection_failure_total | JDBC等待连接失败总数     | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_prep_stmt_cache_current_size         | JDBC预编译语句缓存当前大小  | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_wait_seconds_high_count              | JDBC等待秒数峰值       | name, runtime                  | 数据源名称, 运行时  | s      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_enabled                              | JDBC数据源启用状态      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_prep_stmt_cache_add_count            | JDBC预编译语句缓存加入次数  | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_failed_reserve_request_count         | JDBC连接预留失败请求数    | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_highest_num_unavailable              | JDBC历史最大不可用连接数   | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_active_connections_high_count        | JDBC活动连接峰值数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_num_available                        | JDBC当前可用连接数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_curr_capacity_high_count             | JDBC容量峰值数        | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_waiting_for_connection_success_total | JDBC等待连接成功总数     | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_deployment_state                     | JDBC部署状态         | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_prep_stmt_cache_miss_count           | JDBC预编译语句缓存未命中次数 | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_num_unavailable                      | JDBC当前不可用连接数     | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_active_connections_current_count     | JDBC当前活动连接数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_leaked_connection_count              | JDBC连接泄漏数        | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_reserve_request_count                | JDBC连接申请请求数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_prep_stmt_cache_access_count         | JDBC预编译语句缓存访问次数  | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_prep_stmt_cache_delete_count         | JDBC预编译语句缓存删除次数  | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_failures_to_reconnect_count          | JDBC重连失败次数       | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_waiting_for_connection_total         | JDBC等待连接总次数      | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_connections_total_count              | JDBC连接总数         | name, runtime                  | 数据源名称, 运行时  | -      |
+| JDBC连接池(JDBCDataSource)  | weblogic_jdbcdatasource_prep_stmt_cache_hit_count            | JDBC预编译语句缓存命中次数  | name, runtime                  | 数据源名称, 运行时  | -      |
+| JMX自监控信息(JMXselfMonitor) | jmx_scrape_duration_seconds                                  | JMX 抓取持续时间       | -                              | -           | s      |
+| JMX自监控信息(JMXselfMonitor) | jmx_scrape_error                                             | JMX 抓取错误         | -                              | -           | -      |
+
 
 ### 版本日志
 
