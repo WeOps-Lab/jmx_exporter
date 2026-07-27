@@ -51,3 +51,17 @@ groups:
       increase(tomcat_servlet_processingtime_total[5m]) / increase(tomcat_servlet_requestcount_total[5m]),
       "protocol", "vector", "", ""
       )
+
+  # Tomcat 线程池忙线程使用率 (%)
+  - record: tomcat_threadpool_busy_usage_percent
+    expr: label_replace(
+      100 * tomcat_threadpool_currentthreadsbusy / tomcat_threadpool_maxthreads,
+      "protocol", "vector", "", ""
+      )
+
+  # Tomcat 线程池已创建线程占最大线程数比例 (%)
+  - record: tomcat_threadpool_created_usage_percent
+    expr: label_replace(
+      100 * tomcat_threadpool_currentthreadcount / tomcat_threadpool_maxthreads,
+      "protocol", "vector", "", ""
+      )

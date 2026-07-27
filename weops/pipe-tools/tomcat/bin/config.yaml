@@ -33,6 +33,29 @@ rules:
       protocol_type: "$1"
     help: Tomcat threadpool $3
     type: GAUGE
+
+  # Spring Boot 内嵌 Tomcat MBean（需启用 server.tomcat.mbeanregistry.enabled）
+  # tomcat_threadpool_maxthreads：最大线程数
+  - pattern: 'Tomcat<name="([\w-]+)-(\d+)", type=ThreadPool><>maxThreads'
+    name: tomcat_threadpool_maxthreads
+    labels:
+      port: "$2"
+      protocol_type: "$1"
+    type: GAUGE
+  # tomcat_threadpool_currentthreadsbusy：当前忙线程数
+  - pattern: 'Tomcat<name="([\w-]+)-(\d+)", type=ThreadPool><>currentThreadsBusy'
+    name: tomcat_threadpool_currentthreadsbusy
+    labels:
+      port: "$2"
+      protocol_type: "$1"
+    type: GAUGE
+  # tomcat_threadpool_currentthreadcount：当前已创建线程数
+  - pattern: 'Tomcat<name="([\w-]+)-(\d+)", type=ThreadPool><>currentThreadCount'
+    name: tomcat_threadpool_currentthreadcount
+    labels:
+      port: "$2"
+      protocol_type: "$1"
+    type: GAUGE
   - pattern: 'Catalina<type=Manager, host=([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|]), context=([-a-zA-Z0-9+/$%~_-|!.]*)><>(processingTime|sessionCounter|rejectedSessions|expiredSessions):'
     name: tomcat_session_$3_total
     labels:
