@@ -37,36 +37,64 @@
 jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的情况下, 需要注意在参数中添加 `Dcom.sun.management.jmxremote.rmi.port=9999`, 指定rmi打开的端口, 该端口可以和 `Dcom.sun.management.jmxremote.port` 填写的值一样  
 
 ### 指标简介
-| **指标ID**                        | **指标中文名**      | **维度ID** | **维度含义** | **单位** |
-|---------------------------------|----------------|----------|----------|--------|
-| jvm_memory_usage_init           | 初始内存大小         | type     | 内存类型     | bytes  |
-| jvm_memory_usage_committed      | 已提交内存大小        | type     | 内存类型     | bytes  |
-| jvm_memory_usage_used           | 已使用内存大小        | type     | 内存类型     | bytes  |
-| jvm_memory_usage_max            | 已使用最大内存        | type     | 内存类型     | bytes  |
-| jvm_threads_total_started_count | 总线程数           | type     | 线程类型     | -      |
-| jvm_threads_daemon_count        | 守护线程数          | type     | 线程类型     | -      |
-| jvm_threads_peak_count          | 峰值线程数          | type     | 线程类型     | -      |
-| jvm_threads_count               | 启动的线程总数        | type     | 线程类型     | -      |
-| jvm_threads_current_user_time   | 当前线程用户时间       | -        | -        | s      |
-| jvm_os_memory_physical_free     | 可用物理内存         | type     | 内存类型     | bytes  |
-| jvm_os_memory_physical_total    | 总物理内存          | type     | 内存类型     | bytes  |
-| jvm_os_memory_swap_free         | 可用交换空间         | type     | 内存类型     | bytes  |
-| jvm_os_memory_swap_total        | 总交换空间          | type     | 内存类型     | bytes  |
-| jvm_os_memory_committed_virtual | 提交的虚拟内存        | type     | 内存类型     | bytes  |
-| jvm_os_available_processors     | 可用处理器数         | -        | -        | -      |
-| jvm_os_processcputime_seconds   | 进程CPU时间        | -        | -        | s      |
-| jvm_bufferpool_count            | BufferPool计数   | type     | 缓冲池类型    | count  |
-| jvm_bufferpool_memoryused       | BufferPool已用内存 | type     | 缓冲池类型    | bytes  |
-| jvm_bufferpool_totalcapacity    | BufferPool总容量  | type     | 缓冲池类型    | bytes  |
-| jvm_gc_collectiontime_seconds   | GC收集总时间        | type     | GC类型     | s      |
-| jvm_gc_collectioncount          | GC收集总次数        | type     | GC类型     | -      |
-| jvm_memorypool_usage_init       | 内存池初始内存使用量     | type     | 内存池类型    | bytes  |
-| jvm_memorypool_usage_committed  | 内存池提交内存使用量     | type     | 内存池类型    | bytes  |
-| jvm_memorypool_usage_used       | 内存池已使用内存       | type     | 内存池类型    | bytes  |
-| jvm_memorypool_usage_max        | 内存池最大内存使用量     | type     | 内存池类型    | bytes  |
-| jmx_scrape_duration_seconds     | JMX抓取消耗时间      | -        | -        | s      |
-| jmx_scrape_error                | 抓取失败的指标        | -        | -        | -      |
 
+#### 指标列表
+
+| **指标ID**                             | **指标中文名**                | **维度ID** | **维度含义**    | **单位** |
+|--------------------------------------|--------------------------|----------|-------------|--------|
+| jvm_memory_usage_init                | 初始内存大小                   | type     | 内存类型        | bytes  |
+| jvm_memory_usage_committed           | 已提交内存大小                  | type     | 内存类型        | bytes  |
+| jvm_memory_usage_used                | 已使用内存大小                  | type     | 内存类型        | bytes  |
+| jvm_memory_usage_max                 | 已使用最大内存                  | type     | 内存类型        | bytes  |
+| jvm_threads_total_started_count      | 总线程数                     | type     | 线程类型        | -      |
+| jvm_threads_daemon_count             | 守护线程数                    | type     | 线程类型        | -      |
+| jvm_threads_peak_count               | 峰值线程数                    | type     | 线程类型        | -      |
+| jvm_threads_count                    | 启动的线程总数                  | type     | 线程类型        | -      |
+| jvm_threads_current_user_time        | 当前线程用户时间                 | -        | -           | s      |
+| jvm_os_memory_physical_free          | 可用物理内存                   | type     | 内存类型        | bytes  |
+| jvm_os_memory_physical_total         | 总物理内存                    | type     | 内存类型        | bytes  |
+| jvm_os_memory_swap_free              | 可用交换空间                   | type     | 内存类型        | bytes  |
+| jvm_os_memory_swap_total             | 总交换空间                    | type     | 内存类型        | bytes  |
+| jvm_os_memory_committed_virtual      | 提交的虚拟内存                  | type     | 内存类型        | bytes  |
+| jvm_os_available_processors          | 可用处理器数                   | -        | -           | -      |
+| jvm_os_processcputime_seconds        | 进程CPU时间                  | -        | -           | s      |
+| jvm_bufferpool_count                 | BufferPool计数             | type     | 缓冲池类型       | count  |
+| jvm_bufferpool_memoryused            | BufferPool已用内存           | type     | 缓冲池类型       | bytes  |
+| jvm_bufferpool_totalcapacity         | BufferPool总容量            | type     | 缓冲池类型       | bytes  |
+| jvm_gc_collectiontime_seconds        | GC收集总时间                  | type     | GC类型        | s      |
+| jvm_gc_collectioncount               | GC收集总次数                  | type     | GC类型        | -      |
+| jvm_memorypool_usage_init            | 内存池初始内存使用量               | type     | 内存池类型       | bytes  |
+| jvm_memorypool_usage_committed       | 内存池提交内存使用量               | type     | 内存池类型       | bytes  |
+| jvm_memorypool_usage_used            | 内存池已使用内存                 | type     | 内存池类型       | bytes  |
+| jvm_memorypool_usage_max             | 内存池最大内存使用量               | type     | 内存池类型       | bytes  |
+| jvm_memory_heap_usage_percent | 堆内存使用率 | type | 内存类型（`Heap`） | % |
+| jvm_memory_nonheap_usage_percent | 非堆已提交内存使用率 | type | 内存类型（`NonHeap`） | % |
+| jmx_scrape_duration_seconds          | JMX抓取消耗时间                | -        | -           | s      |
+| jmx_scrape_error                     | 抓取失败的指标                  | -        | -           | -      |
+
+#### 计算指标
+
+以下为建议的 Prometheus recording rules，不包含 GC 汇总规则。
+
+```yaml
+groups:
+  - name: jvm_common_derived
+    rules:
+      # jvm_memory_heap_usage_percent：堆内存使用率（%）
+      - record: jvm_memory_heap_usage_percent
+        expr: |
+          100 * jvm_memory_usage_used{type="Heap"}
+          / jvm_memory_usage_max{type="Heap"}
+
+      # jvm_memory_nonheap_usage_percent：非堆已提交内存使用率（%）
+      - record: jvm_memory_nonheap_usage_percent
+        expr: |
+          100 * jvm_memory_usage_used{type="NonHeap"}
+          / jvm_memory_usage_committed{type="NonHeap"}
+
+```
+
+部分 JVM 的 `jvm_memory_usage_max` 可能为 `-1`，表示没有固定最大值；该场景不应直接展示堆内存使用率。非堆指标以 `committed` 为分母，表示已提交内存使用率。
 
 ### 版本日志
 
@@ -74,6 +102,9 @@ jmx采集会同时随机打开rmi端口, 所以在有网络限制(防火墙)的�
 
 - weops调整
 
+#### weops_jvm_jmx v2.1.3
+
+- 新增 Prometheus recording rule 计算指标：`jvm_memory_heap_usage_percent`（堆内存使用率）、`jvm_memory_nonheap_usage_percent`（非堆已提交内存使用率）。
 
 
 添加“小嘉”微信即可获取jvm监控指标最佳实践礼包，其他更多问题欢迎咨询 

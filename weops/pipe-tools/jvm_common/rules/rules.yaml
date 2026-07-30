@@ -8,9 +8,9 @@ groups:
       "protocol", "vector", "", ""
       )
 
-  # JVM 非堆内存使用率 (%)
+  # JVM 非堆已提交内存使用率 (%)
   - record: jvm_memory_nonheap_usage_percent
     expr: label_replace(
-      100 * jvm_memory_usage_used{type="NonHeap"} / jvm_memory_usage_max{type="NonHeap"},
+      100 * jvm_memory_usage_used{type="NonHeap"} / jvm_memory_usage_committed{type="NonHeap"},
       "protocol", "vector", "", ""
       )
